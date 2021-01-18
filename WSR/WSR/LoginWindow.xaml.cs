@@ -1,14 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace WSR
 {
@@ -20,6 +11,27 @@ namespace WSR
         public LoginWindow()
         {
             InitializeComponent();
+        }
+
+        private void BtnLogin_OnClick(object sender, RoutedEventArgs e)
+        {
+            switch (AuthticateUser())
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+            }
+        }
+
+        private int AuthticateUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BtnExit_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
