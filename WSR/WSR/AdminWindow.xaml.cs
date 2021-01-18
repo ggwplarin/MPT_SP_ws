@@ -19,8 +19,10 @@ namespace WSR
     /// </summary>
     public partial class AdminWindow : Window
     {
-        public AdminWindow()
+        private readonly Window _previousWindow; 
+        public AdminWindow(Window previousWindow)
         {
+            _previousWindow = previousWindow;
             InitializeComponent();
         }
 
@@ -30,6 +32,21 @@ namespace WSR
         }
 
         private void BtnExit_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _previousWindow.Show();
+        }
+
+        private void BtnChangeRole_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BtnToggleLogin_Click(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
