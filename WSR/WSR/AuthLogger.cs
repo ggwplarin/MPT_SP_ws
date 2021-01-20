@@ -11,12 +11,13 @@ namespace WSR
     {
         private DataContext _db;
         private User _user;
-        private DateTime _sessionStartTime;
+        public DateTime SessionStartTime;
         private string _sessionFilePath;
+
         public AuthLogger(User user)
         {
             _user = user;
-            _sessionStartTime = DateTime.Now;
+            SessionStartTime = DateTime.Now;
             _sessionFilePath = $"{Environment.CurrentDirectory}\\{_user.Id}.xml";
             if (File.Exists(_sessionFilePath))
             {
@@ -25,7 +26,7 @@ namespace WSR
             var serializer = new XmlSerializer(typeof(AuthLogger));
             using TextWriter writer =
                 new StreamWriter(_sessionFilePath);
-            serializer.Serialize(writer,this);
+            serializer.Serialize(writer, this);
         }
 
         public void Exit(string reason)
@@ -33,7 +34,7 @@ namespace WSR
             _db = new DataContext();
             _db.AuthLog.Add(new Auth
             {
-                LogInTime = _sessionStartTime,
+                LogInTime = SessionStartTime,
                 LogOutTime = DateTime.Now,
                 ExitReason = reason,
                 UserId = _user.Id

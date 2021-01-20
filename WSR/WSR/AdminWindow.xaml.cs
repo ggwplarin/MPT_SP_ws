@@ -25,14 +25,15 @@ namespace WSR
         private readonly Window _previousWindow;
         private readonly DataContext _db;
         private User _user;
-
-        public AdminWindow(Window previousWindow, object args)
+        private readonly AuthLogger _logger;
+        public AdminWindow(Window previousWindow, User user,AuthLogger logger)
         {
             _previousWindow = previousWindow;
             _db = new DataContext();
+            _logger = logger;
             InitializeComponent();
             LoadUsersTable();
-            _user = (User) args;
+            _user = user;
             var officesList = _db.Offices.ToList();
             CbOfficesList.ItemsSource = officesList;
             CbOfficesList.DisplayMemberPath = "Title";
@@ -60,7 +61,7 @@ namespace WSR
 
         private void BtnExit_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            _logger.Exit("");
         }
 
         private void Window_Closed(object sender, EventArgs e)

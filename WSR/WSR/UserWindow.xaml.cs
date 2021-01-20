@@ -24,16 +24,17 @@ namespace WSR
         private readonly Window _previousWindow;
         private readonly DispatcherTimer _clockTimer;
         private readonly DateTime _sessionStartTime;
-        public UserWindow(Window previousWindow, object args)
+        private readonly AuthLogger _logger;
+        public UserWindow(Window previousWindow, User user,AuthLogger logger)
         {
             _previousWindow = previousWindow;
+            _logger = logger;
             InitializeComponent();
-
-            _sessionStartTime = DateTime.Now;
+            _sessionStartTime = _logger.SessionStartTime;
             _clockTimer = new DispatcherTimer();
             _clockTimer.Tick+=UpdateClock;
             _clockTimer.Start();
-            LblGreeting.Content = $"Hi {((User) args).FirstName}, Welcome to AMONIC Airlines";
+            LblGreeting.Content = $"Hi {user.FirstName}, Welcome to AMONIC Airlines";
         }
 
         private void UpdateClock(object sender, EventArgs e)
@@ -45,7 +46,7 @@ namespace WSR
 
         private void BtnExit_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            _logger.Exit("");
         }
 
         private void UserWindow_OnClosed(object sender, EventArgs e)

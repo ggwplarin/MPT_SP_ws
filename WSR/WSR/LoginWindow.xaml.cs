@@ -23,6 +23,7 @@ namespace WSR
         private static int _cooldown = 0;
         private int _attemptsToLogin = 0;
         private DataContext db;
+
         /// <summary>
         /// Обработка нажатия кнопки Login
         /// Открывает следующее окно основываясь на роли пользователя либо выводит ошибку
@@ -35,15 +36,16 @@ namespace WSR
             var user = AuthenticateUser(TbUsername.Text, TbPassword.Password);
             if (user == null) return;
             if (!user.Active) MessageBox.Show("Ваш профиль был заблокирован администратором.");
+            var logger = new AuthLogger(user);
             switch (user.RoleId)
             {
                 case 1:
-                    var adminWindow = new AdminWindow(this, user);
+                    var adminWindow = new AdminWindow(this, user,logger);
                     adminWindow.Show();
                     Hide();
                     break;
                 case 2:
-                    var userWindow = new UserWindow(this, user);
+                    var userWindow = new UserWindow(this, user,logger);
                     userWindow.Show();
                     Hide();
                     break;
