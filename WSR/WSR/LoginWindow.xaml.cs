@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using WSR.DBContexts;
+using WSR.dtos;
 
 namespace WSR
 {
@@ -17,7 +22,7 @@ namespace WSR
         private static DispatcherTimer _timer;
         private static int _cooldown = 0;
         private int _attemptsToLogin = 0;
-
+        private DataContext db;
         /// <summary>
         /// Обработка нажатия кнопки Login
         /// Открывает следующее окно основываясь на роли пользователя либо выводит ошибку
@@ -26,17 +31,19 @@ namespace WSR
         /// <param name="e"></param>
         private void BtnLogin_OnClick(object sender, RoutedEventArgs e)
         {
-            switch (AuthenticateUser(TbUsername.Text, TbPassword.Password))
+
+            var user = AuthenticateUser(TbUsername.Text, TbPassword.Password);
+            if (user == null) return;
+            if (!user.Active) MessageBox.Show("Ваш профиль был заблокирован администратором.");
+            switch (user.RoleId)
             {
-                case 0:
-                    break;
                 case 1:
-                    var adminWindow = new AdminWindow(this);
+                    var adminWindow = new AdminWindow(this, user);
                     adminWindow.Show();
                     Hide();
                     break;
                 case 2:
-                    var userWindow = new UserWindow(this, null);//TODO: заменить null на данные пользователя
+                    var userWindow = new UserWindow(this, user);
                     userWindow.Show();
                     Hide();
                     break;
@@ -74,26 +81,26 @@ namespace WSR
         /// 4 - Некорректные данные;
         /// 5 - Блокировка входа
         /// </returns>
-        private int AuthenticateUser(string username, string password)
+        private User AuthenticateUser(string username, string password)
         {
-            //TODO: добавить проверку правильности заполнения
-            var usernameValid = true;
-            var passwordValid = true;
-            if (!(usernameValid & passwordValid)) return 4;
-            if (_cooldown != 0) return 5;
-
-
-            if (false)
+            var ok = true;
+            ok &= !string.IsNullOrWhiteSpace(username);
+            ok &= !string.IsNullOrWhiteSpace(password);
+            if (!ok) return null;
+            if (_cooldown != 0) return null;
+            db = new DataContext();
+            var user = db.Users.FirstOrDefault(u => u.Email == username && u.Password == password);
+            if (user!=null)
             {
-                return 2;
+                return user;
             }
             else
             {
-
+                
                 if (_attemptsToLogin < 3)
                 {
                     _attemptsToLogin++;
-                    return 0;
+                    return null;
                 }
                 _timer = new DispatcherTimer();
                 _timer.Tick += TimerTick;
@@ -102,7 +109,7 @@ namespace WSR
                 _cooldown = 10;
                 BtnLogin.IsEnabled = false;
                 BtnLogin.Content = "Wait";
-                return 5;
+                return null;
             }
 
         }

@@ -2,15 +2,15 @@
 {
     public class Role
     {
-        public int ID { get; set; }
-        public int Title { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
 
         public Role()
         {
         }
-        public Role(int id, int title)
+        public Role(int id, string title)
         {
-            ID = id;
+            Id = id;
             Title = title;
         }
     }

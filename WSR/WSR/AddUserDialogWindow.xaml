@@ -1,0 +1,47 @@
+﻿<Window x:Class="WSR.AddUserDialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WSR"
+        mc:Ignorable="d"
+        Title="AddUserDialogWindow" Height="400" Width="400">
+    <Window.Resources>
+        <Style x:Key="Default">
+            <Setter Property="Control.FontFamily" Value="TeX Gyre Adventor"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Style="{StaticResource Default}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="40"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" Height="24" HorizontalAlignment="Center">
+            <Button x:Name="BtnSave" Content="Save" Width="64" Click="BtnSave_Click"></Button>
+            <Button x:Name="BtnCancel" Content="Cancel" Width="64" Margin="24,0,0,0" Click="BtnCancel_Click"></Button>
+        </StackPanel>
+        <Label Grid.Row="0" Grid.Column="0" Content="Email address" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="First name" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="Last name" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <Label Grid.Row="3" Grid.Column="0" Content="Office" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <Label Grid.Row="4" Grid.Column="0" Content="Birthdate" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <Label  Grid.Row="5" Grid.Column="0" Content="Password" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <TextBox x:Name="TbEmail" Grid.Row="0" Grid.Column="1" Height="24" />
+        <TextBox x:Name="TbFirstName" Grid.Row="1" Grid.Column="1" Height="24" />
+        <TextBox x:Name="TbLastName" Grid.Row="2" Grid.Column="1" Height="24" />
+        <ComboBox x:Name="CbOffice" Grid.Row="3" Grid.Column="1" Height="24" />
+        <DatePicker x:Name="DpBirthDate" Grid.Row="4" Grid.Column="1" Height="24" />
+        <PasswordBox x:Name="PbPassword" Grid.Row="5" Grid.Column="1" Height="24" />
+    </Grid>
+</Window>

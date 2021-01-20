@@ -4,29 +4,31 @@ namespace WSR.dtos
 {
     public class User
     {
-        public int ID { get; set; }
-        public int OfficeID { get; set; }
-        public int RoleID { get; set; }
+        public int Id { get; set; }
+        public int OfficeId { get; set; }
+        public int RoleId { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Firstname { get; set; }
+        public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime Birthdate { get; set; }
+        public bool Active { get; set; }
 
         public User()
         {
         }
 
-        public User(int id, int officeId, int roleId, string email, string password, string firstname, string lastName, DateTime birthDate)
+        public User(int id, int officeId, int roleId, string email, string password, string firstName, string lastName, DateTime birthDate, bool active)
         {
-            ID = id;
-            OfficeID = officeId;
-            RoleID = roleId;
+            Id = id;
+            OfficeId = officeId;
+            RoleId = roleId;
             Email = email;
             Password = password;
-            Firstname = firstname;
+            FirstName = firstName;
             LastName = lastName;
-            BirthDate = birthDate;
+            Birthdate = birthDate;
+            Active = active;
         }
     }
 }
